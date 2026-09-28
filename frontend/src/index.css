@@ -1,0 +1,169 @@
+@import "tailwindcss";
+
+/* ===== CSS Custom Properties ===== */
+:root,
+[data-theme="system"] {
+  /* Default to light until JS detects system preference */
+  --bg: #F7F9FB;
+  --surface: #FFFFFF;
+  --surface-2: #EDF1F5;
+  --border: #DDE3EA;
+  --text: #1A2027;
+  --text-muted: #5B6875;
+  --accent: #0E8C7F;
+  --accent-hover: #0B7569;
+  --ok: #1E9E54;
+  --warn: #C77D12;
+  --danger: #C8323F;
+
+  --sidebar-width: 260px;
+  --sidebar-collapsed-width: 64px;
+  --navbar-height: 56px;
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --shadow-sm: 0 1px 2px rgba(0,0,0,0.05);
+  --shadow-md: 0 4px 12px rgba(0,0,0,0.08);
+  --shadow-lg: 0 8px 24px rgba(0,0,0,0.12);
+  --font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+[data-theme="light"] {
+  --bg: #F7F9FB;
+  --surface: #FFFFFF;
+  --surface-2: #EDF1F5;
+  --border: #DDE3EA;
+  --text: #1A2027;
+  --text-muted: #5B6875;
+  --accent: #0E8C7F;
+  --accent-hover: #0B7569;
+  --ok: #1E9E54;
+  --warn: #C77D12;
+  --danger: #C8323F;
+}
+
+[data-theme="dark"] {
+  --bg: #0E1116;
+  --surface: #161B22;
+  --surface-2: #1C232D;
+  --border: #2A3340;
+  --text: #E6EDF3;
+  --text-muted: #8B98A9;
+  --accent: #3FB6A8;
+  --accent-hover: #36A096;
+  --ok: #4ADE80;
+  --warn: #F5B34A;
+  --danger: #F0616D;
+}
+
+@media (prefers-color-scheme: dark) {
+  [data-theme="system"] {
+    --bg: #0E1116;
+    --surface: #161B22;
+    --surface-2: #1C232D;
+    --border: #2A3340;
+    --text: #E6EDF3;
+    --text-muted: #8B98A9;
+    --accent: #3FB6A8;
+    --accent-hover: #36A096;
+    --ok: #4ADE80;
+    --warn: #F5B34A;
+    --danger: #F0616D;
+  }
+}
+
+@media (prefers-color-scheme: light) {
+  [data-theme="system"] {
+    --bg: #F7F9FB;
+    --surface: #FFFFFF;
+    --surface-2: #EDF1F5;
+    --border: #DDE3EA;
+    --text: #1A2027;
+    --text-muted: #5B6875;
+    --accent: #0E8C7F;
+    --accent-hover: #0B7569;
+    --ok: #1E9E54;
+    --warn: #C77D12;
+    --danger: #C8323F;
+  }
+}
+
+/* ===== Global Reset & Base ===== */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  font-family: var(--font-family);
+  background-color: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+  min-height: 100vh;
+}
+
+#root {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+a {
+  color: var(--accent);
+  text-decoration: none;
+}
+a:hover {
+  text-decoration: underline;
+}
+
+button {
+  cursor: pointer;
+  font-family: inherit;
+}
+
+input, select, textarea {
+  font-family: inherit;
+  font-size: inherit;
+}
+
+/* ===== Scrollbar Styling ===== */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--text-muted);
+}
+
+/* ===== Focus Visible ===== */
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* ===== Utility Classes ===== */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
