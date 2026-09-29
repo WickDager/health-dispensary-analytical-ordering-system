@@ -7,6 +7,8 @@ import uuid
 from datetime import date, timedelta
 from unittest.mock import patch
 
+from django.utils import timezone
+
 import pytest
 
 from apps.approvals.models import ApprovalRequest
@@ -708,8 +710,14 @@ class TestIngestStatusAPI:
     def test_status_without_task_id_returns_latest(self, admin_client):
         """GET /ingest/status/ returns the newest audit for the user."""
         user = admin_client.handler._force_user
-        self._make_audit(user)
+        # Force distinct created_at: auto_now_add plus the coarse Windows
+        # clock can give two rows identical timestamps, making "latest"
+        # ambiguous and this test flaky.
+        older = self._make_audit(user)
         latest = self._make_audit(user)
+        AIIngestAudit.objects.filter(pk=older.pk).update(
+            created_at=timezone.now() - timedelta(seconds=10)
+        )
         response = admin_client.get(f"{self.URL}status/")
         assert response.status_code == 200
         assert response.data["data"]["id"] == str(latest.id)

@@ -101,7 +101,7 @@ def ingest_status(request, task_id: str | None = None):
     audits = (
         AIIngestAudit.objects
         .filter(created_by=request.user)
-        .order_by("-created_at")
+        .order_by("-created_at", "-id")  # -id: deterministic tiebreak when created_at is identical
     )
     if task_id:
         latest = audits.filter(task_id=task_id).first() or audits.first()
