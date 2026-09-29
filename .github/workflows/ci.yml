@@ -13,9 +13,6 @@ jobs:
     env:
       # CI has no .env file; DEBUG=1 also satisfies the FERNET_KEY check in settings.py
       DEBUG: "1"
-    defaults:
-      run:
-        working-directory: health-dispensary-analytical-ordering-system
     steps:
       - uses: actions/checkout@v4
 
@@ -23,7 +20,7 @@ jobs:
         with:
           python-version: "3.12"
           cache: pip
-          cache-dependency-path: health-dispensary-analytical-ordering-system/requirements.txt
+          cache-dependency-path: requirements.txt
 
       - name: Install Python dependencies
         run: pip install -r requirements.txt
@@ -36,7 +33,7 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: health-dispensary-analytical-ordering-system/frontend
+        working-directory: frontend
     steps:
       - uses: actions/checkout@v4
 
@@ -44,7 +41,7 @@ jobs:
         with:
           node-version: "22"
           cache: npm
-          cache-dependency-path: health-dispensary-analytical-ordering-system/frontend/package-lock.json
+          cache-dependency-path: frontend/package-lock.json
 
       - name: Install frontend dependencies
         run: npm ci
@@ -60,5 +57,5 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: frontend-dist
-          path: health-dispensary-analytical-ordering-system/frontend/dist/
+          path: frontend/dist/
           retention-days: 7
